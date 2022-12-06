@@ -8,7 +8,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Get some code from a GitHub repository
-                git 'https://github.com/yzhang598/maven-project.git'
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/yzhang598/maven-project.git']]])
 
             }
         }
@@ -26,7 +26,7 @@ pipeline {
             steps {
             
                 // create docker build
-                sh "docker build -t webapp:v${BUILD_NUMBER}"
+                sh "docker build -t webapp:v${BUILD_NUMBER} ."
 
             }
         }
